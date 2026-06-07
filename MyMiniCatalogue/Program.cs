@@ -1,5 +1,9 @@
+using DragonScribeStudios.MyMiniCatalogue;
 using DragonScribeStudios.MyMiniCatalogue.Components;
 using DragonScribeStudios.MyMiniCatalogue.Core;
+using DragonScribeStudios.MyMiniCatalogue.Extensions;
+using DragonScribeStudios.MyMiniCatalogue.Games.Warhammer40k;
+using DragonScribeStudios.MyMiniCatalogue.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddMyMiniCatalogueCore();
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<Api>();
+builder.Services.AddScoped<CacheState>();
+builder.Services.AddControllers();
+builder.Services.AddWarhammer40k();
 
 var app = builder.Build();
 
@@ -25,5 +34,8 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+app.SeedDatabaseWithGames();
 
 app.Run();

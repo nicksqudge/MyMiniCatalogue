@@ -1,7 +1,14 @@
 ﻿@page "/"
+@using DragonScribeStudios.MyMiniCatalogue.Services
+@inject CacheState cache
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+@if (cache.Game is not null)
+{
+    <h2>@cache.Game.Name</h2>
+}

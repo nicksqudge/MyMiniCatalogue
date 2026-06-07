@@ -5,10 +5,14 @@ namespace DragonScribeStudios.MyMiniCatalogue.Core.Data;
 
 public sealed record Game
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
+    public string Code { get; set; }
     public string Name { get; set; }
-    public ICollection<Faction> Factions { get; set; }
+    
+    public GameId GameId() => new(Id);
 }
+
+public sealed record GameId(int Value);
 
 public class GameConfig : IEntityTypeConfiguration<Game>
 {
@@ -16,6 +20,7 @@ public class GameConfig : IEntityTypeConfiguration<Game>
     {
         builder.ToDataTable("Games");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).IsRequired();
+        builder.Property(x => x.Code).IsCode();
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
     }
 }

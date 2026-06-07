@@ -5,7 +5,8 @@ namespace DragonScribeStudios.MyMiniCatalogue.Core.Data;
 
 public sealed record Faction
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
+    public string Code { get; set; }
     public Game Game { get; set; }
     public string Name { get; set; }
 }
@@ -16,7 +17,8 @@ public class FactionConfig : IEntityTypeConfiguration<Faction>
     {
         builder.ToDataTable("Factions");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).IsRequired();
-        builder.HasOne(x => x.Game).WithMany(x => x.Factions);
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
+        builder.Property(x => x.Code).IsCode();
+        builder.HasOne(x => x.Game);
     }
 }

@@ -11,4 +11,5 @@ public class Database : DbContext
     }
     
     public DbSet<Game> GamesTable { get; set; }
+    public DbSet<Faction> FactionsTable { get; set; }
 }

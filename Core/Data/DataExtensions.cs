@@ -9,4 +9,9 @@ public static class DataExtensions
     {
         builder.ToTable(tableName, "Data");
     }
+
+    public static void IsCode(this PropertyBuilder<string> property)
+    {
+        property.IsRequired().HasMaxLength(30);
+    }
 }

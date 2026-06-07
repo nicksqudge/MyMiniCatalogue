@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using DragonScribeStudios.MyMiniCatalogue.Services
+@inherits LayoutComponentBase
+@inject CacheState cache;
 
 <div class="page">
     <main>
@@ -13,3 +15,13 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await cache.Load();
+    }
+
+}
