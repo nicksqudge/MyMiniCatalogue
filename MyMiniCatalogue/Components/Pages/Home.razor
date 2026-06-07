@@ -1,6 +1,7 @@
 ﻿@page "/"
+@using DragonScribeStudios.MyMiniCatalogue.Controllers
+@using DragonScribeStudios.MyMiniCatalogue.Core.Data
 @using DragonScribeStudios.MyMiniCatalogue.Services
-@inject CacheState cache
 
 <PageTitle>Home</PageTitle>
 
@@ -8,7 +9,20 @@
 
 Welcome to your new app.
 
-@if (cache.Game is not null)
+<h2>@(game?.Name ?? "No game")</h2>
+
+<ul>
+@foreach (var faction in factions)
 {
-    <h2>@cache.Game.Name</h2>
+    <li>@faction.Name</li>
+}
+</ul>
+
+@code {
+
+    [CascadingParameter]
+    private CacheController.CacheResult? cache { get; set; }
+
+    private Game? game => cache?.Game;
+    private Faction[] factions => cache?.Factions ?? [];
 }
